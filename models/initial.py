@@ -1,5 +1,4 @@
-from peewee import Model, SqliteDatabase, CharField, ForeignKeyField, TextField, DateTimeField, BooleanField
-import datetime
+from peewee import Model, SqliteDatabase, CharField, ForeignKeyField, IntegerField, DoubleField
 
 
 db = SqliteDatabase('my_database.db')
@@ -10,12 +9,26 @@ class BaseModel(Model):
         database = db
 
 
-class User(BaseModel):
-    username = CharField(unique=True)
+class Country(BaseModel):
+    name = CharField(unique=True)
 
 
-class Tweet(BaseModel):
-    user = ForeignKeyField(User, backref='tweets')
-    message = TextField()
-    created_date = DateTimeField(default=datetime.datetime.now)
-    is_published = BooleanField(default=True)
+class PopulationInfo(BaseModel):
+    country = ForeignKeyField(Country, backref='population_infos')
+    year = IntegerField(null=True)
+    count = IntegerField(null=True)
+    growth = DoubleField(null=True)
+
+
+class Emission(BaseModel):
+    country = ForeignKeyField(Country, backref='emissions')
+    year = IntegerField(null=True)
+    value = DoubleField(null=True)
+
+
+class GDPInfo(BaseModel):
+    country = ForeignKeyField(Country, backref='gdp_infos')
+    year = IntegerField(null=True)
+    value = DoubleField(null=True)
+
+
