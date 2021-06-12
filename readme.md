@@ -2,6 +2,8 @@
 
 Project done by Esra, Alik and Simon
 
+[Models](https://drive.google.com/file/d/1-lFP6gt_kZZtQuK9rrDhi10YVvghdmDc/view?usp=sharing)
+
 # Installation
 **Install poetry & poethepoet**
 
