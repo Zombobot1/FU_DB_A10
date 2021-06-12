@@ -1,3 +1,11 @@
-import numpy as np
+from models.initial import db, User, Tweet
 
-print(np.asarray([1, 2, 3]))
+db.drop_tables([User, Tweet])
+db.connect(reuse_if_open=True)
+db.create_tables([User, Tweet])
+
+charlie = User.create(username='charlie')
+
+Tweet.create(user=charlie, message='My first tweet')
+
+print(User.get(User.username == 'charlie').username)
