@@ -1,7 +1,7 @@
 from peewee import Model, SqliteDatabase, CharField, ForeignKeyField, IntegerField, DoubleField
 
 
-db = SqliteDatabase('my_database.db')
+db = SqliteDatabase('../data/db.db')
 
 
 class BaseModel(Model):
@@ -17,7 +17,6 @@ class PopulationInfo(BaseModel):
     country = ForeignKeyField(Country, backref='population_infos')
     year = IntegerField(null=True)
     count = IntegerField(null=True)
-    growth = DoubleField(null=True)
 
 
 class Emission(BaseModel):
