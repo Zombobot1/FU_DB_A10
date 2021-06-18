@@ -7,16 +7,13 @@ import plotly.io as pio
 from models.initial import db, Country, GDPInfo, PopulationInfo, Emission
 
 # pip install dash -- using conda prompt
-# On browser, go to http://127.0.0.1:8050/
+# after running script, go to http://127.0.0.1:8050/ on browser
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-
 emissions = Emission.select().where(Emission.year > 1960)
 df = pd.DataFrame([e for e in emissions.tuples()], columns = ["Index","Country", "Year","Values"])
-
-pio.renderers.default = 'browser'
 
 # to be able to see plotly graphics, we need to download plotly orca package
 # conda install -c plotly plotly-orca
@@ -38,4 +35,4 @@ app.layout = html.Div(children=[
 ])
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
