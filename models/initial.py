@@ -1,6 +1,5 @@
 from peewee import Model, SqliteDatabase, CharField, ForeignKeyField, IntegerField, DoubleField
 
-
 db = SqliteDatabase('../data/db.db')
 
 
@@ -31,3 +30,7 @@ class GDPInfo(BaseModel):
     value = DoubleField(null=True)
 
 
+class Temperature(BaseModel):
+    country = ForeignKeyField(Country, backref='temperature')
+    year = IntegerField(null=True)
+    value = DoubleField(null=True)
