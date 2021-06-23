@@ -25,6 +25,12 @@ class Emission(BaseModel):
     value = DoubleField(null=True)
 
 
+class Temperature(BaseModel):
+    country = ForeignKeyField(Country, backref='temperatures')
+    year = IntegerField(null=True)
+    value = DoubleField(null=True)
+
+
 class GDPInfo(BaseModel):
     country = ForeignKeyField(Country, backref='gdp_infos')
     year = IntegerField(null=True)
