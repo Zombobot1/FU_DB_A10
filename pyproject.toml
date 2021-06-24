@@ -11,6 +11,7 @@ notebook = "^6.4.0"
 pandas = "^1.2.4"
 matplotlib = "^3.4.2"
 peewee = "^3.14.4"
+dash = "^1.20.0"
 
 [tool.poetry.dev-dependencies]
 poethepoet = "^0.10.0"
