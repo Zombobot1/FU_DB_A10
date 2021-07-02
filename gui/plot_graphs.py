@@ -18,7 +18,6 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 emissions = Emission.select().where(Emission.year > 1960)
 df_emissions = pd.DataFrame([e for e in emissions.tuples()], columns = ["Index","Country", "Year","Values"])
-
 cumulative_emissions_by_world = Emission.select(fn.SUM(Emission.value).over(Emission.year).alias('cumulativeSum'),  Emission.year).where((Emission.year > 1961) & (Emission.country == "World"))
 df_cumulative_emissions = pd.DataFrame([e for e in cumulative_emissions_by_world.tuples()], columns = ["CumulativeSum", "Year"])
 
@@ -27,7 +26,6 @@ df_mean_temperature_by_country = pd.DataFrame([e for e in mean_temperature_by_co
 
 temperature_by_country = Temperature.select(Temperature.value, Temperature.year, Temperature.country).where(Temperature.year > 1961)
 df_temperature_by_country = pd.DataFrame([e for e in temperature_by_country.tuples()], columns = ["Values", "Year", "Country"])
-
 
 # Create figure with secondary y-axis
 fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -102,6 +100,8 @@ app.layout = html.Div(children=[
 
 ])
 
+def main():
+    app.run_server(debug=False)
 
 if __name__ == '__main__':
     app.run_server(debug=False)
