@@ -41,18 +41,18 @@ RawCountries = List[RawCountry]
 def fill_db(countries: RawCountries):
     print('Filling db from raw data')
 
-    for c in countries:
-        Country.create(name=c.name)
-        for e in c.emissions:
-            Emission.create(country=c.name, year=e.year, value=e.value)
-        for g in c.gdp:
-            GDPInfo.create(country=c.name, year=g.year, value=g.value)
-        for p in c.populations:
-            PopulationInfo.create(country=c.name, year=p.year, value=p.value)
-        for t in c.temperatures:
-            Temperature.create(country=c.name, year=t.year, value=t.value)
+    for raw_country in countries:
+        country = Country.create(name=raw_country.name)
+        for e in raw_country.emissions:
+            Emission.create(country=country, year=e.year, value=e.value)
+        for g in raw_country.gdp:
+            GDPInfo.create(country=country, year=g.year, value=g.value)
+        for p in raw_country.populations:
+            PopulationInfo.create(country=country, year=p.year, value=p.value)
+        for t in raw_country.temperatures:
+            Temperature.create(country=country, year=t.year, value=t.value)
 
-        print(f'{c.name} inserted')
+        print(f'{raw_country.name} inserted')
 
 
 def co2_emission_df_to_dc(df):

@@ -34,3 +34,4 @@ Both:
     
 # Interactions
 1. Launch jupyter notebook **poe notebook**
+2. Launch Dash server **poe start**
