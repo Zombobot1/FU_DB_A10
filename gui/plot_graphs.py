@@ -39,11 +39,16 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 df_cumulative_emissions = pd.DataFrame(res, columns = ["CumulativeSum", "Year"])
-mean_temperature_by_country = Temperature.select(fn.AVG(Temperature.value).alias('avgTemp'), Temperature.year).where(Temperature.year > 1961).group_by(Temperature.year)
+
+df_emissions = emissions = Emission.select().where(Emission.year >= 1961)
+df_emissions = pd.DataFrame([e for e in emissions.tuples()], columns = ["Index","Country", "Year","Values"])
+
+
+mean_temperature_by_country = Temperature.select(fn.AVG(Temperature.value).alias('avgTemp'), Temperature.year).where(Temperature.year >= 1961).group_by(Temperature.year)
 df_mean_temperature_by_country = pd.DataFrame([e for e in mean_temperature_by_country.tuples()], columns = ["AvgTemp", "Year"])
 
 
-temperature_by_country = Temperature.select(Temperature.value, Temperature.year, Temperature.country).where(Temperature.year > 1961)
+temperature_by_country = Temperature.select(Temperature.value, Temperature.year, Temperature.country).where(Temperature.year >= 1961)
 df_temperature_by_country = pd.DataFrame([e for e in temperature_by_country.tuples()], columns = ["Values", "Year", "Country"])
 
 # Create figure with secondary y-axis
@@ -76,12 +81,12 @@ fig.update_layout(
 fig.show()
 
 ## Figure - Yearly Temperature
-#fig_temp = px.line(df_temperature_by_country, x="Year", y="Values", color="Country",
-#              line_group="Country", hover_name="Country")
+fig_temp = px.line(df_temperature_by_country, x="Year", y="Values", color="Country",
+              line_group="Country", hover_name="Country")
 
 ## Figure - Yearly CO2
-#fig_co2 = px.line(df_emissions, x="Year", y="Values", color="Country",
-#              line_group="Country", hover_name="Country")
+fig_co2 = px.line(df_emissions, x="Year", y="Values", color="Country",
+              line_group="Country", hover_name="Country")
 
 #HTML Layout
 app.layout = html.Div(children=[
